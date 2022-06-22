@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
@@ -35,6 +36,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool cardTapped = false;
   bool getDirection = false;
   bool isExpanded = false;
+  bool isExpanded1 = false;
+  bool isNormal = true;
+  bool isSatellite = false;
   final TextEditingController _textEditingController = TextEditingController();
 
   void _setMarker(point) {
@@ -72,7 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: Stack(
         children: [
           GoogleMap(
-            mapType: MapType.normal,
+            mapType: isNormal ? MapType.normal : isSatellite ? MapType.satellite : MapType.terrain,
             markers: _markers,
             initialCameraPosition: _cameraPosition,
             myLocationEnabled: true,
@@ -80,6 +84,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             mapToolbarEnabled: true,
             zoomControlsEnabled: false,
             compassEnabled: false,
+            trafficEnabled: false,
             buildingsEnabled: false,
             onMapCreated: (GoogleMapController controller) {
               _googleMapController = controller;
@@ -90,6 +95,195 @@ class _HomePageState extends ConsumerState<HomePage> {
                 CameraUpdate.newLatLng(coordinates),
               );
             },
+          ),
+          Positioned(
+            top: 330,
+            right: 16,
+            child: GestureDetector(
+              onTap: () {
+                isExpanded1 = !isExpanded1;
+                setState(() {});
+              },
+              child: AnimatedContainer(
+                  height: isExpanded1 ? 280 : 55,
+                  width: isExpanded1 ? 60 : 55,
+                  duration: const Duration(milliseconds: 100),
+                  curve: Curves.linear,
+                  decoration: BoxDecoration(
+                    borderRadius: isExpanded1
+                        ? BorderRadius.circular(10)
+                        : BorderRadius.circular(10),
+                    color: ColorService.main.withOpacity(0.7),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            isExpanded1 = !isExpanded1;
+                            setState(() {});
+                          },
+                          iconSize: 32,
+                          color: ColorService.blue,
+                          icon: const Icon(Icons.layers),
+                        ),
+                        isExpanded1
+                            ? Expanded(
+                                child: GestureDetector(
+                                    onTap: () {
+                                      isNormal = true;
+                                      isSatellite = false;
+                                      setState((){});
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Container(
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            child: const Image(
+                                              image: AssetImage(
+                                                  'assets/images/normal.jpg',
+                                              ),
+                                              fit: BoxFit.cover,
+                                              height: 45,
+                                              width: 45,
+                                            ),
+                                          ),
+                                        ),
+                                        const Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                8.0, 4.0, 8.0, 4.0,
+                                            ),
+                                            child: FittedBox(
+                                              child: Text(
+                                                'Default',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              )
+                            : const SizedBox(),
+                        isExpanded1
+                            ? Expanded(
+                          child: GestureDetector(
+                              onTap: () {
+                                isNormal = false;
+                                isSatellite = true;
+                                setState((){});
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.loose,
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0),
+                                      ),
+                                      child: const Image(
+                                        image: AssetImage(
+                                            'assets/images/satellite.jpg',
+                                        ),
+                                        fit: BoxFit.cover,
+                                        height: 45,
+                                        width: 45,
+                                      ),
+                                    ),
+                                  ),
+                                  const Flexible(
+                                    fit: FlexFit.loose,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          8.0, 4.0, 8.0, 4.0),
+                                      child: FittedBox(
+                                        child: Text(
+                                          'Satellite',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
+                        )
+                            : const SizedBox(),
+                        isExpanded1
+                            ? Expanded(
+                          child: GestureDetector(
+                              onTap: () {
+                                isNormal = false;
+                                isSatellite = false;
+                                setState((){});
+                                },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.loose,
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(10.0),
+                                      ),
+                                      child: const Image(
+                                        image: AssetImage(
+                                            'assets/images/normal.jpg',
+                                        ),
+                                        fit: BoxFit.cover,
+                                        height: 45,
+                                        width: 45,
+                                      ),
+                                    ),
+                                  ),
+                                  const Flexible(
+                                    fit: FlexFit.loose,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          8.0, 4.0, 8.0, 4.0,
+                                      ),
+                                      child: FittedBox(
+                                        child: Text(
+                                          'Terrain',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
+                        )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  )),
+            ),
           ),
           searchToggle
               ? Container(
@@ -361,7 +555,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
-
   // FabCircularMenu(
   //   alignment: Alignment.bottomLeft,
   //   fabColor: Colors.blue.shade50,
@@ -392,6 +585,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   //     ),
   //   ],
   // ),
+
   Widget buildResultsList(
       AutoCompleteResult placeItem, SearchToggle searchFlag) {
     final allSearchResults = ref.watch(placeResultsProvider);
