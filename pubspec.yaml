@@ -53,6 +53,7 @@ flutter:
   assets:
     - assets/lottie/
     - assets/mapicons/
+    - assets/images/
 
   fonts:
     - family: WorkSans
