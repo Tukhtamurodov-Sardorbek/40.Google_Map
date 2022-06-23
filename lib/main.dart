@@ -20,21 +20,21 @@ Future main() async {
   ]);
 
   runApp(
-      ProviderScope(
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Google Maps',
-            themeMode: ThemeMode.dark,
-            theme: ThemeData(
-              primaryColor: Colors.black,
-              scaffoldBackgroundColor: ColorService.main,
-              appBarTheme: const AppBarTheme(
-                backgroundColor: ColorService.main,
-                elevation: 0,
-              ),
-            ),
-            home: const SplashPage(),
+    ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Google Maps',
+        themeMode: ThemeMode.dark,
+        theme: ThemeData(
+          primaryColor: Colors.black,
+          scaffoldBackgroundColor: ColorService.main,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: ColorService.main,
+            elevation: 0,
           ),
+        ),
+        home: const SplashPage(),
       ),
+    ),
   );
 }
