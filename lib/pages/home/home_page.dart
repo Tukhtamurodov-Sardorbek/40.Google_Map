@@ -37,6 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool getDirection = false;
   bool isExpanded = false;
   bool isExpanded1 = false;
+  bool isExpanded2 = false;
   bool isNormal = true;
   bool isSatellite = false;
   final TextEditingController _textEditingController = TextEditingController();
@@ -76,7 +77,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: Stack(
         children: [
           GoogleMap(
-            mapType: isNormal ? MapType.normal : isSatellite ? MapType.satellite : MapType.terrain,
+            mapType: isNormal
+                ? MapType.normal
+                : isSatellite
+                    ? MapType.satellite
+                    : MapType.terrain,
             markers: _markers,
             initialCameraPosition: _cameraPosition,
             myLocationEnabled: true,
@@ -134,11 +139,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     onTap: () {
                                       isNormal = true;
                                       isSatellite = false;
-                                      setState((){});
+                                      setState(() {});
                                     },
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Flexible(
                                           fit: FlexFit.loose,
@@ -150,7 +156,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                             ),
                                             child: const Image(
                                               image: AssetImage(
-                                                  'assets/images/normal.jpg',
+                                                'assets/images/normal.jpg',
                                               ),
                                               fit: BoxFit.cover,
                                               height: 45,
@@ -162,7 +168,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                           fit: FlexFit.loose,
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
-                                                8.0, 4.0, 8.0, 4.0,
+                                              8.0,
+                                              4.0,
+                                              8.0,
+                                              4.0,
                                             ),
                                             child: FittedBox(
                                               child: Text(
@@ -181,104 +190,113 @@ class _HomePageState extends ConsumerState<HomePage> {
                             : const SizedBox(),
                         isExpanded1
                             ? Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                isNormal = false;
-                                isSatellite = true;
-                                setState((){});
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Container(
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0),
-                                      ),
-                                      child: const Image(
-                                        image: AssetImage(
-                                            'assets/images/satellite.jpg',
-                                        ),
-                                        fit: BoxFit.cover,
-                                        height: 45,
-                                        width: 45,
-                                      ),
-                                    ),
-                                  ),
-                                  const Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          8.0, 4.0, 8.0, 4.0),
-                                      child: FittedBox(
-                                        child: Text(
-                                          'Satellite',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      isNormal = false;
+                                      isSatellite = true;
+                                      setState(() {});
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Container(
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            child: const Image(
+                                              image: AssetImage(
+                                                'assets/images/satellite.jpg',
+                                              ),
+                                              fit: BoxFit.cover,
+                                              height: 45,
+                                              width: 45,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                        )
+                                        const Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              8.0,
+                                              4.0,
+                                              8.0,
+                                              4.0,
+                                            ),
+                                            child: FittedBox(
+                                              child: Text(
+                                                'Satellite',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              )
                             : const SizedBox(),
                         isExpanded1
                             ? Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                isNormal = false;
-                                isSatellite = false;
-                                setState((){});
-                                },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Container(
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(10.0),
-                                      ),
-                                      child: const Image(
-                                        image: AssetImage(
-                                            'assets/images/normal.jpg',
-                                        ),
-                                        fit: BoxFit.cover,
-                                        height: 45,
-                                        width: 45,
-                                      ),
-                                    ),
-                                  ),
-                                  const Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          8.0, 4.0, 8.0, 4.0,
-                                      ),
-                                      child: FittedBox(
-                                        child: Text(
-                                          'Terrain',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      isNormal = false;
+                                      isSatellite = false;
+                                      setState(() {});
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Container(
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            child: const Image(
+                                              image: AssetImage(
+                                                'assets/images/normal.jpg',
+                                              ),
+                                              fit: BoxFit.cover,
+                                              height: 45,
+                                              width: 45,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                        )
+                                        const Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              8.0,
+                                              4.0,
+                                              8.0,
+                                              4.0,
+                                            ),
+                                            child: FittedBox(
+                                              child: Text(
+                                                'Terrain',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                              )
                             : const SizedBox(),
                       ],
                     ),
@@ -436,36 +454,109 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  searchToggle = true;
-                  radiusSlider = false;
-                  pressedNear = false;
-                  cardTapped = false;
-                  getDirection = false;
-                });
-              },
-              child: Container(
+            // GestureDetector(
+            //   onTap: () {
+            //     setState(() {
+            //       searchToggle = true;
+            //       radiusSlider = false;
+            //       pressedNear = false;
+            //       cardTapped = false;
+            //       getDirection = false;
+            //     });
+            //   },
+            //   child: Container(
+            //     height: 60,
+            //     width: 60,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(100),
+            //       color: ColorService.main,
+            //     ),
+            //     child: const Icon(
+            //       Icons.search,
+            //       size: 32,
+            //       color: ColorService.blue,
+            //     ),
+            //   ),
+            // ),
+            AnimatedContainer(
                 height: 60,
-                width: 60,
+                width: isExpanded2 ? 200 : 60,
+                duration: const Duration(milliseconds: 550),
+                curve: Curves.linear,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   color: ColorService.main,
                 ),
-                child: const Icon(
-                  Icons.search,
-                  size: 32,
-                  color: ColorService.blue,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: AnimatedRotation(
+                        duration: const Duration(milliseconds: 550),
+                        turns: isExpanded2 ? 0.5 : 1,
+                        child: IconButton(
+                          onPressed: () {
+                            isExpanded = false;
+                            isExpanded2 = !isExpanded2;
+                            setState(() {});
+                          },
+                          iconSize: 32,
+                          color: ColorService.blue,
+                          icon: const Icon(Icons.double_arrow),
+                        ),
+                      ),
+                    ),
+                    isExpanded2
+                        ? Flexible(
+                            fit: FlexFit.tight,
+                            child: GestureDetector(
+                              onTap: () {
+                                _googleMapController
+                                    .animateCamera(CameraUpdate.zoomOut());
+                              },
+                              child: const Icon(
+                                Icons.search,
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                    isExpanded2
+                        ? Flexible(
+                            fit: FlexFit.tight,
+                            child: GestureDetector(
+                              onTap: () async {
+                                _googleMapController.animateCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: await _getUserCurrentPosition(),
+                                      zoom: 16,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.navigation_outlined,
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                    isExpanded2 ? const SizedBox(width: 8.0) : const SizedBox(),
+                  ],
+                )
+                // : const Icon(
+                //     Icons.double_arrow,
+                //     size: 32,
+                //     color: ColorService.blue,
+                //   ),
                 ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                isExpanded = !isExpanded;
-                setState(() {});
-              },
-              child: AnimatedContainer(
+            AnimatedContainer(
                 height: 60,
                 width: isExpanded ? 260 : 60,
                 duration: const Duration(milliseconds: 550),
@@ -474,12 +565,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                   borderRadius: BorderRadius.circular(100),
                   color: ColorService.main,
                 ),
-                child: isExpanded
-                    ? Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Flexible(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    isExpanded
+                        ? Flexible(
                             fit: FlexFit.tight,
                             child: IconButton(
                               onPressed: () {
@@ -490,8 +581,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                               color: ColorService.blue,
                               icon: const Icon(Icons.double_arrow),
                             ),
-                          ),
-                          Flexible(
+                          )
+                        : const SizedBox(),
+                    isExpanded
+                        ? Flexible(
                             fit: FlexFit.tight,
                             child: GestureDetector(
                               onTap: () {
@@ -504,8 +597,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
-                          ),
-                          Flexible(
+                          )
+                        : const SizedBox(),
+                    isExpanded
+                        ? Flexible(
                             fit: FlexFit.tight,
                             child: GestureDetector(
                               onTap: () async {
@@ -524,8 +619,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
-                          ),
-                          Flexible(
+                          )
+                        : const SizedBox(),
+                    isExpanded
+                        ? Flexible(
                             fit: FlexFit.tight,
                             child: GestureDetector(
                               onTap: () {
@@ -539,17 +636,33 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
+                          )
+                        : const SizedBox(),
+                    isExpanded ? const SizedBox(width: 8.0) : const SizedBox(),
+                    isExpanded
+                        ? const SizedBox()
+                        : SizedBox(
+                            height: 60,
+                            width: 60,
+                            child: IconButton(
+                              onPressed: () {
+                                isExpanded2 = false;
+                                isExpanded = !isExpanded;
+                                setState(() {});
+                              },
+                              iconSize: 32,
+                              color: ColorService.blue,
+                              icon: const Icon(Icons.menu),
+                            ),
                           ),
-                          const SizedBox(width: 8.0),
-                        ],
-                      )
-                    : const Icon(
-                        Icons.menu,
-                        size: 32,
-                        color: ColorService.blue,
-                      ),
-              ),
-            ),
+                  ],
+                )
+                // : const Icon(
+                //     Icons.menu,
+                //     size: 32,
+                //     color: ColorService.blue,
+                //   ),
+                ),
           ],
         ),
       ),
