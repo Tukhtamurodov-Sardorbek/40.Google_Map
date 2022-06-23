@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
@@ -56,15 +55,28 @@ class _HomePageState extends ConsumerState<HomePage> {
     });
   }
 
-  Future<void> gotoSearchedPlace(double lat, double lng) async {
-    _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(lat, lng), zoom: 13)));
+  Future<void> gotoSearchedPlace(
+      {required LatLng position,
+      double zoom = 13.0,
+      bool putMarker = true}) async {
+    _googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: position,
+          zoom: zoom,
+        ),
+      ),
+    );
 
-    _setMarker(LatLng(lat, lng));
+    if (putMarker) {
+      _setMarker(position);
+    }
   }
 
   Future<LatLng> _getUserCurrentPosition() async {
     final position = await Permission.getGeoLocationPosition();
+    print('**********************************************');
+    print('Lat: ${position.latitude} ; Long: ${position.longitude}');
     return LatLng(position.latitude, position.longitude);
   }
 
@@ -112,8 +124,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: AnimatedContainer(
                   height: isExpanded1 ? 280 : 55,
                   width: isExpanded1 ? 60 : 55,
-                  duration: const Duration(milliseconds: 100),
-                  curve: Curves.linear,
+                  duration: const Duration(milliseconds: 550),
+                  curve: Curves.linearToEaseOut,
                   decoration: BoxDecoration(
                     borderRadius: isExpanded1
                         ? BorderRadius.circular(10)
@@ -454,30 +466,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // GestureDetector(
-            //   onTap: () {
-            //     setState(() {
-            //       searchToggle = true;
-            //       radiusSlider = false;
-            //       pressedNear = false;
-            //       cardTapped = false;
-            //       getDirection = false;
-            //     });
-            //   },
-            //   child: Container(
-            //     height: 60,
-            //     width: 60,
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(100),
-            //       color: ColorService.main,
-            //     ),
-            //     child: const Icon(
-            //       Icons.search,
-            //       size: 32,
-            //       color: ColorService.blue,
-            //     ),
-            //   ),
-            // ),
             AnimatedContainer(
                 height: 60,
                 width: isExpanded2 ? 200 : 60,
@@ -514,8 +502,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                             fit: FlexFit.tight,
                             child: GestureDetector(
                               onTap: () {
-                                _googleMapController
-                                    .animateCamera(CameraUpdate.zoomOut());
+                                setState(() {
+                                  searchToggle = true;
+                                  radiusSlider = false;
+                                  pressedNear = false;
+                                  cardTapped = false;
+                                  getDirection = false;
+                                });
                               },
                               child: const Icon(
                                 Icons.search,
@@ -549,13 +542,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         : const SizedBox(),
                     isExpanded2 ? const SizedBox(width: 8.0) : const SizedBox(),
                   ],
-                )
-                // : const Icon(
-                //     Icons.double_arrow,
-                //     size: 32,
-                //     color: ColorService.blue,
-                //   ),
-                ),
+                )),
             AnimatedContainer(
                 height: 60,
                 width: isExpanded ? 260 : 60,
@@ -602,18 +589,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                     isExpanded
                         ? Flexible(
                             fit: FlexFit.tight,
-                            child: GestureDetector(
-                              onTap: () async {
-                                _googleMapController.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: await _getUserCurrentPosition(),
-                                      zoom: 16,
-                                    ),
-                                  ),
-                                );
+                            child: IconButton(
+                              onPressed: () async {
+                                LatLng position =
+                                    await _getUserCurrentPosition();
+                                gotoSearchedPlace(
+                                    position: position,
+                                    zoom: 16,
+                                    putMarker: false);
                               },
-                              child: const Icon(
+                              icon: const Icon(
                                 Icons.my_location_outlined,
                                 size: 32,
                                 color: Colors.white,
@@ -656,13 +641,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ),
                   ],
-                )
-                // : const Icon(
-                //     Icons.menu,
-                //     size: 32,
-                //     color: ColorService.blue,
-                //   ),
-                ),
+                )),
           ],
         ),
       ),
@@ -719,7 +698,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   context)
               .then((List<Location> place) {
             place.isNotEmpty
-                ? gotoSearchedPlace(place.first.latitude, place.first.longitude)
+                ? gotoSearchedPlace(
+                    position:
+                        LatLng(place.first.latitude, place.first.longitude))
                 : null;
           });
           // gotoSearchedPlace(place[0].latitude, place[0].longitude);
