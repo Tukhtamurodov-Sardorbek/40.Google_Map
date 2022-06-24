@@ -15,29 +15,26 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
-  # For State Management
+  # For State Management (1)
   provider: ^6.0.3
 
-  # For Google Map
+  # For Google Map (2)
   google_maps_flutter: ^2.1.8
 
-  # For getting current location
+  # For getting current location (3)
   geolocator: ^8.2.1
 
-  # For getting searched location long-lat
+  # For getting searched location long-lat (4)
   geocoding: ^2.0.4
 
-  # For networking
+  # For networking (5)
   http: ^0.13.4
 
-  dartz: ^0.10.1
+  # For Internet Connection Status (6)
+  internet_connection_checker: ^0.0.1+4
 
-  # For UI
+  # For UI (7)
   lottie: ^1.3.0
-  fab_circular_menu: ^1.0.2
-  flutter_polyline_points: ^1.0.0
-  flutter_rating_stars: ^1.0.3+4
-  flip_card: ^0.6.0
 
 dev_dependencies:
   flutter_test:
