@@ -23,16 +23,16 @@ class InternetConnectionProvider extends ChangeNotifier {
   }
 
   Future<bool> _updateConnectionStatus() async{
-    late bool _isConnected;
+    late bool isConnected;
     try{
       final List<InternetAddress> result = await InternetAddress.lookup('google.com');
       if(result.isNotEmpty && result.first.rawAddress.isNotEmpty){
-        _isConnected = true;
+        isConnected = true;
       }
     }on SocketException catch (_){
-      _isConnected = false;
+      isConnected = false;
     }
-    return _isConnected;
+    return isConnected;
   }
 
   listenTheStatus() async {
@@ -50,6 +50,6 @@ class InternetConnectionProvider extends ChangeNotifier {
         notifyListeners();
       }
     });
-    print('*** Internet: $_hasInternet ***');
+    debugPrint('*** Internet: $_hasInternet ***');
   }
 }
