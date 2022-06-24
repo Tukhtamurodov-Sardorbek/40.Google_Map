@@ -158,7 +158,7 @@ class HomeProvider extends ChangeNotifier {
     markerIdCounter += 1;
     notifyListeners();
 
-    final Uint8List markerIcon = await getBytesFromAsset('assets/images/pin.png', 75);
+    final Uint8List markerIcon = await getBytesFromAsset('assets/images/pin.png', 90);
     final Marker marker = Marker(
       markerId: isOnTap ? MarkerId('put_$markerIdCounter') : MarkerId('marker_$markerIdCounter'),
       position: point,
