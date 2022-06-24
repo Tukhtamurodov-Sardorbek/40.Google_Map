@@ -35,30 +35,11 @@ class NoInternet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 300,
-              child: LottieBuilder.asset(
-                  'assets/lottie/no_internet_connection.json'),
-            ),
-            // const SizedBox(height: 10),
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     provider.hasInternet =
-            //     await InternetConnectionChecker().hasConnection;
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            //     shape: const StadiumBorder(),
-            //   ),
-            //   child: const Icon(
-            //     CupertinoIcons.arrow_counterclockwise,
-            //     size: 30,
-            //   ),
-            // )
-          ],
+        child: SizedBox(
+          height: 300,
+          child: LottieBuilder.asset(
+              'assets/lottie/no_internet_connection.json',
+          ),
         ),
       ),
     );
