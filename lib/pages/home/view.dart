@@ -721,8 +721,8 @@ class HomePage extends StatelessWidget {
                       ? provider.isMarkerEnabled
                           ? ElevatedButton(
                               onLongPress: () {
-                                provider.isMarkerEnabled = false;
                                 provider.clearMarkersOnTap();
+                                provider.isMarkerEnabled = false;
                               },
                               onPressed: () {
                                 provider.isDefaultMarker =
