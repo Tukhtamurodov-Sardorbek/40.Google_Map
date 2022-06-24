@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_map_integration/models/autocomplete_model.dart';
-
-final placeResultsProvider =
-    ChangeNotifierProvider<PlaceResults>((ref) => PlaceResults());
-final searchToggleProvider =
-    ChangeNotifierProvider<SearchToggle>((ref) => SearchToggle());
 
 class PlaceResults extends ChangeNotifier {
   // List<AutoCompleteResult> _allAutocompleteResults = [];
@@ -20,11 +14,8 @@ class PlaceResults extends ChangeNotifier {
   List<AutoCompleteResult> allReturnedResults = [];
 
   void setResults(List<AutoCompleteResult> allPlaces) {
-    print('Came: $allPlaces');
-    print('Before: $allReturnedResults');
     allReturnedResults = allPlaces;
     notifyListeners();
-    print('After: $allReturnedResults');
   }
 }
 
@@ -41,6 +32,24 @@ class SearchToggle extends ChangeNotifier {
 
   void toggleSearch() {
     searchToggle = !searchToggle;
+    notifyListeners();
+  }
+}
+
+class FromToggle extends ChangeNotifier {
+  bool fromToggle = false;
+
+  void toggleFrom() {
+    fromToggle = !fromToggle;
+    notifyListeners();
+  }
+}
+
+class ToToggle extends ChangeNotifier {
+  bool toToggle = false;
+
+  void toggleTo() {
+    toToggle = !toToggle;
     notifyListeners();
   }
 }
