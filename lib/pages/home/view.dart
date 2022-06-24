@@ -347,10 +347,10 @@ class HomePage extends StatelessWidget {
                           List<AutoCompleteResult> searchResults =
                               await MapService().searchPlaces(value);
 
-                          allSearchResults.setResults(searchResults);
+                          allSearchResults.searchResults = searchResults;
                         } else {
                           List<AutoCompleteResult> emptyList = [];
-                          allSearchResults.setResults(emptyList);
+                          allSearchResults.searchResults = emptyList;
                         }
                       });
                     },
@@ -371,15 +371,15 @@ class HomePage extends StatelessWidget {
                       color: ColorService.main.withOpacity(0.8),
                       // Colors.white.withOpacity(0.7),
                     ),
-                    child: allSearchResults.allReturnedResults.isNotEmpty
+                    child: allSearchResults.searchResults.isNotEmpty
                         ? ListView.builder(
                             physics: const BouncingScrollPhysics(),
-                            itemCount:
-                                allSearchResults.allReturnedResults.length,
+                            padding: EdgeInsets.zero,
+                            itemCount: allSearchResults.searchResults.length,
                             itemBuilder: (BuildContext context, int index) {
                               return BuildSearchResultsList(
                                 placeItem:
-                                    allSearchResults.allReturnedResults[index],
+                                    allSearchResults.searchResults[index],
                                 isFromTo: false,
                               );
                             },
@@ -476,10 +476,10 @@ class HomePage extends StatelessWidget {
                                 List<AutoCompleteResult> searchResults =
                                     await MapService().searchPlaces(value);
 
-                                allSearchResults.setResults(searchResults);
+                                allSearchResults.searchResults = searchResults;
                               } else {
                                 List<AutoCompleteResult> emptyList = [];
-                                allSearchResults.setResults(emptyList);
+                                allSearchResults.searchResults = emptyList;
                               }
                             },
                           );
@@ -520,7 +520,7 @@ class HomePage extends StatelessWidget {
                                   },
                                   icon: const Icon(
                                     Icons.search,
-                                    color: ColorService.red,
+                                    color: ColorService.green,
                                   ),
                                 ),
                                 IconButton(
@@ -567,10 +567,10 @@ class HomePage extends StatelessWidget {
                                 List<AutoCompleteResult> searchResults =
                                     await MapService().searchPlaces(value);
 
-                                allSearchResults.setResults(searchResults);
+                                allSearchResults.searchResults = searchResults;
                               } else {
                                 List<AutoCompleteResult> emptyList = [];
-                                allSearchResults.setResults(emptyList);
+                                allSearchResults.searchResults = emptyList;
                               }
                             },
                           );
@@ -585,18 +585,17 @@ class HomePage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0),
                                 color: ColorService.main.withOpacity(0.8),
                               ),
-                              child: allSearchResults
-                                      .allReturnedResults.isNotEmpty
+                              child: allSearchResults.searchResults.isNotEmpty
                                   ? ListView.builder(
                                       padding: EdgeInsets.zero,
                                       physics: const BouncingScrollPhysics(),
-                                      itemCount: allSearchResults
-                                          .allReturnedResults.length,
+                                      itemCount:
+                                          allSearchResults.searchResults.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return BuildSearchResultsList(
                                           placeItem: allSearchResults
-                                              .allReturnedResults[index],
+                                              .searchResults[index],
                                           isFromTo: true,
                                         );
                                       },
@@ -726,7 +725,8 @@ class HomePage extends StatelessWidget {
                                 provider.clearMarkersOnTap();
                               },
                               onPressed: () {
-                                provider.isDefaultMarker = !provider.isDefaultMarker;
+                                provider.isDefaultMarker =
+                                    !provider.isDefaultMarker;
                               },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
