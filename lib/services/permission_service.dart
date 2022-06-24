@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+
 class Permission {
   static Future<Position> getGeoLocationPosition() async {
     bool serviceEnabled;
