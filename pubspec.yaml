@@ -16,7 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # For State Management
-  flutter_riverpod: ^1.0.4
+  provider: ^6.0.3
 
   # For Google Map
   google_maps_flutter: ^2.1.8
