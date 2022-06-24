@@ -15,7 +15,8 @@ class InternetConnectionPage extends StatefulWidget {
 class _InternetConnectionPageState extends State<InternetConnectionPage> {
   @override
   void initState() {
-    Provider.of<InternetConnectionProvider>(context, listen: false).listenTheStatus();
+    Provider.of<InternetConnectionProvider>(context, listen: false)
+        .listenTheStatus();
     super.initState();
   }
 
@@ -23,9 +24,23 @@ class _InternetConnectionPageState extends State<InternetConnectionPage> {
   Widget build(BuildContext context) {
     final provider = context.watch<InternetConnectionProvider>();
     debugPrint('In build: ${provider.hasInternet}');
-    return provider.hasInternet ? const HomePage() : const NoInternet();
-  }
+    return WillPopScope(
+      onWillPop: () async {
+        final now = DateTime.now();
+        const maxDuration = Duration(seconds: 2);
+        final isWarning = now.difference(provider.lastPressed) > maxDuration;
 
+        if (isWarning) {
+          provider.updateLastTime();
+          // doubleTap(context);
+          return false;
+        } else {
+          return true;
+        }
+      },
+      child: provider.hasInternet ? const HomePage() : const NoInternet(),
+    );
+  }
 }
 
 class NoInternet extends StatelessWidget {
@@ -38,7 +53,7 @@ class NoInternet extends StatelessWidget {
         child: SizedBox(
           height: 300,
           child: LottieBuilder.asset(
-              'assets/lottie/no_internet_connection.json',
+            'assets/lottie/no_internet_connection.json',
           ),
         ),
       ),
