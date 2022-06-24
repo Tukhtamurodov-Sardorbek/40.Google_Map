@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_map_integration/pages/home/provider.dart';
 import 'package:google_map_integration/pages/internet_connection/provider.dart';
 import 'package:google_map_integration/pages/splash/splash_page.dart';
 import 'package:google_map_integration/services/color_service.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
