@@ -32,7 +32,7 @@ class _InternetConnectionPageState extends State<InternetConnectionPage> {
 
         if (isWarning) {
           provider.updateLastTime();
-          // doubleTap(context);
+          // TODO: Double Tap To Exit
           return false;
         } else {
           return true;
