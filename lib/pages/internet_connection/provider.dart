@@ -6,6 +6,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 class InternetConnectionProvider extends ChangeNotifier {
   bool _hasInternet = false;
   bool get hasInternet => _hasInternet;
+  DateTime lastPressed = DateTime(0);
 
   Future<void> _initConnectionState() async {
     try {
@@ -26,7 +27,7 @@ class InternetConnectionProvider extends ChangeNotifier {
     late bool isConnected;
     try {
       final List<InternetAddress> result =
-          await InternetAddress.lookup('google.com');
+      await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result.first.rawAddress.isNotEmpty) {
         isConnected = true;
       }
@@ -52,5 +53,10 @@ class InternetConnectionProvider extends ChangeNotifier {
       }
     });
     debugPrint('*** Internet: $_hasInternet ***');
+  }
+
+  void updateLastTime(){
+    lastPressed = DateTime.now();
+    notifyListeners();
   }
 }
