@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_map_integration/pages/home/home_page.dart';
+import 'package:google_map_integration/pages/home/view.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashPage extends StatefulWidget {
