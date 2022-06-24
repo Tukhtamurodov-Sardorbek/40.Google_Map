@@ -128,8 +128,9 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearMarkersOnTap(){
-    markers.removeWhere((element) => element.markerId.toString().startsWith('MarkerId(put_'));
+  void clearMarkersOnTap() {
+    markers.removeWhere(
+        (element) => element.markerId.toString().startsWith('MarkerId(put_'));
     notifyListeners();
   }
 
@@ -154,13 +155,19 @@ class HomeProvider extends ChangeNotifier {
     );
   }
 
-  void setMarker({required LatLng point, bool isOnTap = false, bool useCustomMarker = false}) async{
+  void setMarker(
+      {required LatLng point,
+      bool isOnTap = false,
+      bool useCustomMarker = false}) async {
     markerIdCounter += 1;
     notifyListeners();
 
-    final Uint8List markerIcon = await getBytesFromAsset('assets/images/pin.png', 90);
+    final Uint8List markerIcon =
+        await getBytesFromAsset('assets/images/pin.png', 90);
     final Marker marker = Marker(
-      markerId: isOnTap ? MarkerId('put_$markerIdCounter') : MarkerId('marker_$markerIdCounter'),
+      markerId: isOnTap
+          ? MarkerId('put_$markerIdCounter')
+          : MarkerId('marker_$markerIdCounter'),
       position: point,
       onTap: () {},
       icon: useCustomMarker
@@ -183,7 +190,10 @@ class HomeProvider extends ChangeNotifier {
         .asUint8List();
   }
 
-  Future<void> gotoSearchedPlace({required LatLng position, double zoom = 13.0, bool putMarker = true}) async {
+  Future<void> gotoSearchedPlace(
+      {required LatLng position,
+      double zoom = 13.0,
+      bool putMarker = true}) async {
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -200,7 +210,8 @@ class HomeProvider extends ChangeNotifier {
 
   Future<LatLng> getUserCurrentPosition() async {
     final position = await Permission.getGeoLocationPosition();
-    debugPrint('\n\t User\'s location: (${position.latitude}, ${position.longitude})');
+    debugPrint(
+        '\n\t User\'s location: (${position.latitude}, ${position.longitude})');
     return LatLng(position.latitude, position.longitude);
   }
 
