@@ -22,14 +22,15 @@ class InternetConnectionProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> _updateConnectionStatus() async{
+  Future<bool> _updateConnectionStatus() async {
     late bool isConnected;
-    try{
-      final List<InternetAddress> result = await InternetAddress.lookup('google.com');
-      if(result.isNotEmpty && result.first.rawAddress.isNotEmpty){
+    try {
+      final List<InternetAddress> result =
+          await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result.first.rawAddress.isNotEmpty) {
         isConnected = true;
       }
-    }on SocketException catch (_){
+    } on SocketException catch (_) {
       isConnected = false;
     }
     return isConnected;
@@ -41,7 +42,7 @@ class InternetConnectionProvider extends ChangeNotifier {
         .onStatusChange
         .listen((InternetConnectionStatus event) async {
       if (event == InternetConnectionStatus.connected) {
-        await _updateConnectionStatus().then((bool isConnected){
+        await _updateConnectionStatus().then((bool isConnected) {
           _hasInternet = isConnected;
           notifyListeners();
         });
