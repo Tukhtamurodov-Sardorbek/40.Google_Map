@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_map_integration/pages/home/provider.dart';
+import 'package:google_map_integration/pages/internet_connection/provider.dart';
 import 'package:google_map_integration/pages/splash/splash_page.dart';
 import 'package:google_map_integration/services/color_service.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,19 +23,22 @@ Future main() async {
   ]);
 
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Google Maps',
-      themeMode: ThemeMode.dark,
-      theme: ThemeData(
-        primaryColor: Colors.black,
-        scaffoldBackgroundColor: ColorService.main,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: ColorService.main,
-          elevation: 0,
+    ChangeNotifierProvider(
+      create: (BuildContext context) => InternetConnectionProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Google Maps',
+        themeMode: ThemeMode.dark,
+        theme: ThemeData(
+          primaryColor: Colors.black,
+          scaffoldBackgroundColor: ColorService.main,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: ColorService.main,
+            elevation: 0,
+          ),
         ),
+        home: const SplashPage(),
       ),
-      home: const SplashPage(),
     ),
   );
 }
