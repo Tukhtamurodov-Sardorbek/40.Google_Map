@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_map_integration/pages/home/view.dart';
+import 'package:google_map_integration/pages/internet_connection/view.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+          context, MaterialPageRoute(builder: (context) => const InternetConnectionPage()));
     });
     super.initState();
   }
