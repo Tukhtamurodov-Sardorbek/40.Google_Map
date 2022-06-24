@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_map_integration/pages/home/view.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +22,7 @@ class _InternetConnectionPageState extends State<InternetConnectionPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<InternetConnectionProvider>();
-    print('In build: ${provider.hasInternet}');
+    debugPrint('In build: ${provider.hasInternet}');
     return provider.hasInternet ? const HomePage() : const NoInternet();
   }
 
