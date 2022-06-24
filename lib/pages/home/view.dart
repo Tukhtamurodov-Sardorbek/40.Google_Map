@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_map_integration/models/autocomplete_model.dart';
@@ -8,8 +7,6 @@ import 'package:google_map_integration/providers/search_autocomplete.dart';
 import 'package:google_map_integration/services/color_service.dart';
 import 'package:google_map_integration/services/map_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import 'provider.dart';
