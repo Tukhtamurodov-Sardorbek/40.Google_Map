@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:ui' as ui;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_map_integration/services/color_service.dart';
 import 'package:google_map_integration/services/permission_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,8 +28,10 @@ class HomeProvider extends ChangeNotifier {
   bool _searchToggle = false;
   bool _getDirection = false;
   bool _expandZoomInOutLocation = false;
-  bool _expandLayer = false; // isExpanded1
-  bool _expandSearchNavigation = false; // isExpanded2
+  bool _expandLayer = false;
+  bool _expandSearchNavigation = false;
+  bool _isMarkerEnabled = false;
+  bool _isDefaultMarker = true;
   bool _isNormal = true;
   bool _isSatellite = false;
   bool _hasInternet = false;
@@ -72,6 +77,18 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get isMarkerEnabled => _isMarkerEnabled;
+  set isMarkerEnabled(bool value) {
+    _isMarkerEnabled = value;
+    notifyListeners();
+  }
+
+  bool get isDefaultMarker => _isDefaultMarker;
+  set isDefaultMarker(bool value) {
+    _isDefaultMarker = value;
+    notifyListeners();
+  }
+
   bool get isNormal => _isNormal;
   set isNormal(bool value) {
     _isNormal = value;
@@ -91,27 +108,32 @@ class HomeProvider extends ChangeNotifier {
   }
 
   /// Methods
-  clearSearchController() {
+  void clearSearchController() {
     searchController.clear();
     notifyListeners();
   }
 
-  clearFromController() {
+  void clearFromController() {
     fromController.clear();
     notifyListeners();
   }
 
-  clearToController() {
+  void clearToController() {
     toController.clear();
     notifyListeners();
   }
 
-  clearMarkers() {
+  void clearMarkers() {
     markers.clear();
     notifyListeners();
   }
 
-  clearPolyline() {
+  void clearMarkersOnTap(){
+    markers.removeWhere((element) => element.markerId.toString().startsWith('MarkerId(put_'));
+    notifyListeners();
+  }
+
+  void clearPolyline() {
     polylines.clear();
     notifyListeners();
   }
@@ -132,19 +154,33 @@ class HomeProvider extends ChangeNotifier {
     );
   }
 
-  void _setMarker(point) {
+  void setMarker({required LatLng point, bool isOnTap = false, bool useCustomMarker = false}) async{
     markerIdCounter += 1;
     notifyListeners();
 
+    final Uint8List markerIcon = await getBytesFromAsset('assets/images/pin.png', 75);
     final Marker marker = Marker(
-      markerId: MarkerId('marker_$markerIdCounter'),
+      markerId: isOnTap ? MarkerId('put_$markerIdCounter') : MarkerId('marker_$markerIdCounter'),
       position: point,
       onTap: () {},
-      icon: BitmapDescriptor.defaultMarker,
+      icon: useCustomMarker
+          ? BitmapDescriptor.fromBytes(markerIcon)
+          : BitmapDescriptor.defaultMarker,
     );
 
     markers.add(marker);
     notifyListeners();
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   Future<void> gotoSearchedPlace({required LatLng position, double zoom = 13.0, bool putMarker = true}) async {
@@ -158,7 +194,7 @@ class HomeProvider extends ChangeNotifier {
     );
 
     if (putMarker) {
-      _setMarker(position);
+      setMarker(point: position);
     }
   }
 
@@ -188,7 +224,7 @@ class HomeProvider extends ChangeNotifier {
     //   ),
     // );
     gotoSearchedPlace(position: LatLng(fromTo[0][0], fromTo[0][1]), zoom: 10, putMarker: false);
-    _setMarker(LatLng(fromTo[0][0], fromTo[0][1]));
-    _setMarker(LatLng(fromTo[1][0], fromTo[1][1]));
+    setMarker(point: LatLng(fromTo[0][0], fromTo[0][1]));
+    setMarker(point: LatLng(fromTo[1][0], fromTo[1][1]));
   }
 }
