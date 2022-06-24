@@ -10,9 +10,7 @@ import 'package:provider/provider.dart';
 class BuildSearchResultsList extends StatelessWidget {
   final AutoCompleteResult placeItem;
   final bool isFromTo;
-  const BuildSearchResultsList(
-      {Key? key, required this.placeItem, required this.isFromTo})
-      : super(key: key);
+  const BuildSearchResultsList({Key? key, required this.placeItem, required this.isFromTo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
